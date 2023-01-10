@@ -23,29 +23,28 @@
                 </thead>
                 <tbody>
 
-                <tr>
+                <tr *ngFor="let user of users">
                   <th scope="row">
                     <div class="media align-items-center">
                       <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
-                        <img alt="Image placeholder" src="../assets/img/theme/sketch.jpg">
+                        {{user?.name?.substring(0,2)?.toUpperCase()}}
                       </a>
                       <div class="media-body">
-                        <span class="mb-0 text-sm">IE45278</span>
+                        <span class="mb-0 text-sm">{{user?.cin}}</span>
                       </div>
                     </div>
                   </th>
-                  <td>Youssef ELmoudene</td>
-                  <td>elmoudene.ysf@gmail.com</td>
-                  <td>10 jun 2023</td>
-                  <td>23 ans</td>
+                  <td>{{user?.name}}</td>
+                  <td>{{user?.email}}</td>
+                  <td>{{user?.created | date: 'dd MMM YYYY'}}</td>
+                  <td>{{user?.age}} ans</td>
 
                   <td>
-                  <span class="badge badge-dot mr-4">
-                    <i class="bg-danger"></i> Enabled
-                  </span>
+                  <span *ngIf="!user?.isEnabled" class="badge badge-dot mr-4"><i class="bg-danger"></i> Disabled</span>
+                  <span  *ngIf="user?.isEnabled" class="badge badge-dot mr-4"><i class="bg-success"></i> Enabled</span>
                   </td>
 
-                  <td>ADMIN</td>
+                  <td>{{user?.role}}</td>
 
 
                   <td class="text-right">

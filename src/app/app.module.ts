@@ -12,7 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
-import {CommonModule} from "@angular/common";
+import {CommonModule, DatePipe} from "@angular/common";
 import {BrowserModule} from "@angular/platform-browser";
 
 
@@ -33,7 +33,7 @@ import {BrowserModule} from "@angular/platform-browser";
     AdminLayoutComponent,
     AuthLayoutComponent
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

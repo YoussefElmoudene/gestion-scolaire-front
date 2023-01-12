@@ -55,4 +55,8 @@ export class UserListComponent implements OnInit {
     this.selectedUser = new User();
     this.showEdit = true;
   }
+
+  getNumberOf(role: string): number {
+    return this.users.filter(u => u.role === role).length;
+  }
 }

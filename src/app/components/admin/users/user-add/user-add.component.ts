@@ -9,6 +9,7 @@ import {GroupeService} from "../../../../controller/service/groupe.service";
 import {SpecialiteService} from "../../../../controller/service/specialite.service";
 import {Student} from "../../../../controller/modules/student.model";
 import {StudentService} from "../../../../controller/service/student.service";
+import {Teacher} from "../../../../controller/modules/teacher.model";
 
 @Component({
   selector: 'app-user-add',
@@ -64,6 +65,9 @@ export class UserAddComponent implements OnInit {
       if (this.selectedUser?.role === 'STUDENT') {
         const student: Student = new Student(this.selectedUser, this.groupe.id);
         this.addStudent(student);
+      } else if (this.selectedUser?.role === 'TEACHER') {
+        const teacher: Teacher = new Teacher(this.selectedUser, this.groupe.id);
+        this.addTeacher(teacher);
       } else {
         this.addUser();
       }
@@ -71,6 +75,9 @@ export class UserAddComponent implements OnInit {
       if (this.selectedUser?.role === 'STUDENT') {
         const student: Student = new Student(this.selectedUser, this.groupe.id);
         this.updateStudent(student);
+      } else if (this.selectedUser?.role === 'TEACHER') {
+        const teacher: Teacher = new Teacher(this.selectedUser, this.groupe.id);
+        this.updateTeacher(teacher);
       } else {
         this.updateUser();
       }
@@ -115,6 +122,27 @@ export class UserAddComponent implements OnInit {
     this.studentService.update(student).subscribe(d => {
       console.log(d)
       this.toastr.info('student updated successfully');
+    }, error => {
+      this.toastr.error('something went wrong, please try again.')
+      console.log(error)
+    });
+  }
+
+  private addTeacher(teacher: Teacher) {
+    this.teacherService.save(teacher).subscribe(d => {
+      console.log(d)
+      this.users.push({...d});
+      this.toastr.success('Teacher added successfully');
+    }, error => {
+      this.toastr.error('something went wrong, please try again.')
+      console.log(error)
+    });
+  }
+
+  private updateTeacher(teacher: Teacher) {
+    this.teacherService.update(teacher).subscribe(d => {
+      console.log(d)
+      this.toastr.info('Teacher updated successfully');
     }, error => {
       this.toastr.error('something went wrong, please try again.')
       console.log(error)

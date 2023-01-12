@@ -13,6 +13,7 @@ import {MatSelectModule} from "@angular/material/select";
 import { SpecialityComponent } from './admin/speciality/speciality.component';
 import { GroupeComponent } from './admin/groupe/groupe.component';
 import { CreateSpecialityComponent } from './admin/speciality/create-speciality/create-speciality.component';
+import { CreateGroupComponent } from './admin/groupe/create-group/create-group.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { CreateSpecialityComponent } from './admin/speciality/create-speciality/
     UserAddComponent,
     SpecialityComponent,
     GroupeComponent,
-    CreateSpecialityComponent
+    CreateSpecialityComponent,
+    CreateGroupComponent
   ],
   exports: [
     FooterComponent,

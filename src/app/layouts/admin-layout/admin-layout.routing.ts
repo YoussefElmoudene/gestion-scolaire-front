@@ -7,13 +7,14 @@ import { UserProfileComponent } from '../../pages/user-profile/user-profile.comp
 import { TablesComponent } from '../../pages/tables/tables.component';
 import {UserListComponent} from "../../components/admin/users/user-list/user-list.component";
 import {SpecialityComponent} from "../../components/admin/speciality/speciality.component";
+import {GroupeComponent} from "../../components/admin/groupe/groupe.component";
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'users',         component: UserListComponent },
     { path: 'specialite',         component: SpecialityComponent },
-    { path: 'groups',         component: UserListComponent },
+    { path: 'groups',         component: GroupeComponent },
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent }
 ];

@@ -55,17 +55,25 @@ export class UserAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.specialteService.getAll().subscribe(d => this.specialtes = d);
+    this.groupeService.getAll().subscribe(d => this.groupes = d);
   }
 
   save() {
-    if (this.selectedUser?.role === 'STUDENT') {
-      const student: Student = new Student(this.selectedUser, this.groupe.id);
-      this.addStudent(student);
-    }
-    if (this.selectedUser?.id === 0) { //create new
-      this.addUser();
-    } else { // update
-      this.updateUser();
+    if (this.selectedUser?.id === 0) {
+      if (this.selectedUser?.role === 'STUDENT') {
+        const student: Student = new Student(this.selectedUser, this.groupe.id);
+        this.addStudent(student);
+      } else {
+        this.addUser();
+      }
+    } else {
+      if (this.selectedUser?.role === 'STUDENT') {
+        const student: Student = new Student(this.selectedUser, this.groupe.id);
+        this.updateStudent(student);
+      } else {
+        this.updateUser();
+      }
     }
   }
 
@@ -73,6 +81,7 @@ export class UserAddComponent implements OnInit {
     this.userService.update(this.selectedUser).subscribe(d => {
       console.log(d);
       this.toastr.info('User updated successfully');
+      this.showEdit = false;
     }, error => {
       this.toastr.error('something went wrong, please try again.')
       console.log(error)
@@ -84,6 +93,7 @@ export class UserAddComponent implements OnInit {
       console.log(d)
       this.users.push({...d});
       this.toastr.success('User added successfully');
+      this.showEdit = false;
     }, error => {
       this.toastr.error('something went wrong, please try again.')
       console.log(error)
@@ -100,4 +110,15 @@ export class UserAddComponent implements OnInit {
       console.log(error)
     });
   }
+
+  private updateStudent(student: Student) {
+    this.studentService.update(student).subscribe(d => {
+      console.log(d)
+      this.toastr.info('student updated successfully');
+    }, error => {
+      this.toastr.error('something went wrong, please try again.')
+      console.log(error)
+    });
+  }
+
 }

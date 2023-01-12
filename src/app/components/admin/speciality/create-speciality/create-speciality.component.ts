@@ -48,15 +48,16 @@ export class CreateSpecialityComponent implements OnInit {
         console.log(d)
         this.specialites.push({...d});
         this.toastr.success('Speciality added successfully');
+        this.showEdit = false;
       }, error => {
         this.toastr.error('something went wrong, please try again.')
         console.log(error)
       });
     } else { // update
-
       this.specialiteService.update(this.selectedSpecialite).subscribe(d => {
         console.log(d)
         this.toastr.info('Speciality updated successfully');
+        this.showEdit = false;
       }, error => {
         this.toastr.error('something went wrong, please try again.')
         console.log(error)

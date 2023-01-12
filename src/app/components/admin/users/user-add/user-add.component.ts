@@ -66,7 +66,7 @@ export class UserAddComponent implements OnInit {
         const student: Student = new Student(this.selectedUser, this.groupe.id);
         this.addStudent(student);
       } else if (this.selectedUser?.role === 'TEACHER') {
-        const teacher: Teacher = new Teacher(this.selectedUser, this.groupe.id);
+        const teacher: Teacher = new Teacher(this.selectedUser, this.specialte.id);
         this.addTeacher(teacher);
       } else {
         this.addUser();
@@ -76,7 +76,7 @@ export class UserAddComponent implements OnInit {
         const student: Student = new Student(this.selectedUser, this.groupe.id);
         this.updateStudent(student);
       } else if (this.selectedUser?.role === 'TEACHER') {
-        const teacher: Teacher = new Teacher(this.selectedUser, this.groupe.id);
+        const teacher: Teacher = new Teacher(this.selectedUser, this.specialte.id);
         this.updateTeacher(teacher);
       } else {
         this.updateUser();
@@ -129,6 +129,7 @@ export class UserAddComponent implements OnInit {
   }
 
   private addTeacher(teacher: Teacher) {
+    console.log(teacher)
     this.teacherService.save(teacher).subscribe(d => {
       console.log(d)
       this.users.push({...d});

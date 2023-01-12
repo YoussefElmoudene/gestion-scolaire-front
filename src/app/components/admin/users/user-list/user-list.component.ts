@@ -9,10 +9,32 @@ import {UserService} from "../../../../controller/service/user.service";
 })
 export class UserListComponent implements OnInit {
 
-  public user: User = new User();
-  public users: Array<User> = new Array<User>();
-
   constructor(private userService: UserService) {
+  }
+
+  get users(): Array<User> {
+    return this.userService.users;
+  }
+
+  set users(value: Array<User>) {
+    this.userService.users = value;
+  }
+
+
+  get showEdit(): boolean {
+    return this.userService.showEdit;
+  }
+
+  set showEdit(value: boolean) {
+    this.userService.showEdit = value;
+  }
+
+  get selectedUser(): User {
+    return this.userService.selectedUser;
+  }
+
+  set selectedUser(value: User) {
+    this.userService.selectedUser = value;
   }
 
   ngOnInit(): void {
@@ -24,4 +46,13 @@ export class UserListComponent implements OnInit {
     });
   }
 
+  openUpdate(user: User) {
+    this.selectedUser = user;
+    this.showEdit = true;
+  }
+
+  openNewUser() {
+    this.selectedUser = new User();
+    this.showEdit = true;
+  }
 }

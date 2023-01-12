@@ -4,8 +4,13 @@ export class User {
   email: string;
   password: string;
   cin: string;
-  age = 0;
+  age: number;
   created: Date = new Date();
-  isEnabled: boolean;
+  isEnabled: boolean = true;
   role: string;
+
+
+
+  constructor() {
+  }
 }

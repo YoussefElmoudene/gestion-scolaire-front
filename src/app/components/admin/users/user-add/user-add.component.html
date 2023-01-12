@@ -1,1 +1,111 @@
-<p>user-add works!</p>
+<div class="modal modal-dialog-centered" id="myModal" tabindex="-1" aria-labelledby="myModal">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title heading-small text-muted mb-4" id="exampleModalLabel">
+          User information
+        </h5>
+      </div>
+
+
+      <div class="modal-body">
+        <div style="background: #F7FAFC;" class="card-body">
+          <form>
+            <div class="pl-lg-4">
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Full name</label>
+                    <input type="text" id="input-username" class="form-control form-control-alternative"
+                           placeholder="Full name" [(ngModel)]="selectedUser.name" name="name">
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Email address</label>
+                    <input type="email" [(ngModel)]="selectedUser.email" name="email" id="input-email"
+                           class="form-control form-control-alternative"
+                           placeholder="jesse@example.com">
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name">Password</label>
+                    <input type="password" id="input-password" [(ngModel)]="selectedUser.password" name="password"
+                           class="form-control form-control-alternative"
+                           placeholder="Password">
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name">CIN</label>
+                    <input type="text" id="input-last-name" [(ngModel)]="selectedUser.cin" name="cin"
+                           class="form-control form-control-alternative"
+                           placeholder="CIN">
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-first-name">Age</label>
+                    <input type="text" id="input-first-name" [(ngModel)]="selectedUser.age" name="age"
+                           class="form-control form-control-alternative"
+                           placeholder="age">
+                  </div>
+                </div>
+
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-first-name">Role</label>
+                    <select class="form-control form-control-alternative" [(ngModel)]="selectedUser.role">
+                      <option [ngValue]="'ADMIN'">ADMIN</option>
+                      <option [ngValue]="'TEACHER'">TEACHER</option>
+                      <option [ngValue]="'STUDENT'">STUDENT</option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <div *ngIf="selectedUser?.role === 'TEACHER'" class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-first-name">Specialete</label>
+                    <select class="form-control form-control-alternative" [(ngModel)]="specialte">
+                      <option *ngFor="let s of specialtes" [ngValue]="s">{{s?.name}}</option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <div *ngIf="selectedUser?.role === 'STUDENT'" class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-first-name">Groupe</label>
+                    <select class="form-control form-control-alternative" [(ngModel)]="groupe">
+                      <option *ngFor="let g of groupes" [ngValue]="g">{{g?.name}}</option>
+                    </select>
+                  </div>
+                </div>
+
+
+              </div>
+
+            </div>
+
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="showEdit = false" class="btn btn-secondary" data-bs-dismiss="modal">Close
+        </button>
+        <button type="button" (click)="save()" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

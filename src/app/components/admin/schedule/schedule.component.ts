@@ -5,6 +5,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import {FullCalendarComponent} from "@fullcalendar/angular";
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import {ScheduleService} from "../../../controller/service/schedule.service";
+import {Schedule} from "../../../controller/modules/schedule";
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -12,7 +14,6 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 })
 export class ScheduleComponent implements OnInit, AfterViewInit {
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
-  Events: any[] = [];
   calendarOptions: CalendarOptions = {
     plugins: [timeGridPlugin, dayGridPlugin, timeGridPlugin, interactionPlugin],
     initialView: 'timeGridFourDay',
@@ -22,13 +23,15 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     allDaySlot: true,
     slotMinTime: "08:00:00",
     slotMaxTime: "19:00:00",
-    slotDuration: "00:60:00",
     expandRows: true,
     views: {
       timeGridFourDay: {
         type: 'timeGrid',
         duration: {days: 7},
-        buttonText: 'Week'
+        buttonText: 'Week',
+        title: 'Schedule',
+        columnFormat: 'dddd', // Format the day to only show like 'Monday'
+        hiddenDays: [0, 6] // Hide Sunday and Saturday?
       }
     },
     eventMouseEnter: function(info) {
@@ -36,10 +39,22 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     },
   };
 
-  constructor() {
+  schedules: Array<Schedule> =new Array<Schedule>();
+
+  constructor(private scheduleService: ScheduleService) {
   }
 
   ngAfterViewInit(): void {
+    const schedule: Schedule = new Schedule();
+    schedule.startTime = '12:00:00.000000';
+    schedule.endTime = '14:00:00.000000';
+    schedule.allDay = false;
+    schedule.daysOfWeek = [1];
+    schedule.title = 'JAVA';
+    schedule.groupId = 'G-1';
+    this.schedules.push({...schedule});
+    // @ts-ignore
+    this.calendarOptions.events = this.schedules;
   }
 
 

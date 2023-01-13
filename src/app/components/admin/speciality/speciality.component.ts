@@ -5,6 +5,8 @@ import {Groupe} from "../../../controller/modules/groupe.model";
 import {GroupeService} from "../../../controller/service/groupe.service";
 import {Teacher} from "../../../controller/modules/teacher.model";
 import {TeacherService} from "../../../controller/service/teacher.service";
+import {Module} from "../../../controller/modules/module.model";
+import {ModuleService} from "../../../controller/service/module.service";
 
 @Component({
   selector: 'app-speciality',
@@ -14,18 +16,18 @@ import {TeacherService} from "../../../controller/service/teacher.service";
 export class SpecialityComponent implements OnInit {
 
   groups: Array<Groupe> = new Array<Groupe>();
-  teachers: Array<Teacher> = new Array<Teacher>();
+  modules: Array<Module> = new Array<Module>();
 
   constructor(private specialiteService: SpecialiteService,
-              private teacherService: TeacherService,
+              private moduleService: ModuleService,
               private groupService: GroupeService) {
   }
 
   ngOnInit(): void {
     this.specialiteService.getAll().subscribe(d => this.specialites = d);
     this.groupService.getAll().subscribe(d => this.groups = d);
-    this.teacherService.getAll().subscribe(d => {
-      this.teachers = d
+    this.moduleService.getAll().subscribe(d => {
+      this.modules = d;
     }, error1 => {
       console.log(error1)
     });
@@ -70,7 +72,7 @@ export class SpecialityComponent implements OnInit {
     return this.groups.filter(g => g.specialiteId === specialite.id).length
   }
 
-  getNumberOfTeacher(specialite: Specialite): number {
-    return this.teachers.filter(g => g.specialiteId === specialite.id).length
+  getNumberOfModules(specialite: Specialite): number {
+    return this.modules.filter(g => g.specialite?.id === specialite.id).length
   }
 }

@@ -8,13 +8,17 @@ import { TablesComponent } from '../../pages/tables/tables.component';
 import {UserListComponent} from "../../components/admin/users/user-list/user-list.component";
 import {SpecialityComponent} from "../../components/admin/speciality/speciality.component";
 import {GroupeComponent} from "../../components/admin/groupe/groupe.component";
+import {ModuleListComponent} from "../../components/admin/module/module-list/module-list.component";
+import {ScheduleComponent} from "../../components/admin/schedule/schedule.component";
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'users',         component: UserListComponent },
     { path: 'specialite',         component: SpecialityComponent },
+    { path: 'modules',         component: ModuleListComponent},
     { path: 'groups',         component: GroupeComponent },
+    { path: 'schedule',         component: ScheduleComponent },
     { path: 'icons',          component: IconsComponent },
-    { path: 'maps',           component: MapsComponent }
+    { path: 'maps',           component: TablesComponent }
 ];

@@ -14,6 +14,10 @@ import { SpecialityComponent } from './admin/speciality/speciality.component';
 import { GroupeComponent } from './admin/groupe/groupe.component';
 import { CreateSpecialityComponent } from './admin/speciality/create-speciality/create-speciality.component';
 import { CreateGroupComponent } from './admin/groupe/create-group/create-group.component';
+import { ModuleListComponent } from './admin/module/module-list/module-list.component';
+import { ModuleCreateComponent } from './admin/module/module-create/module-create.component';
+import { ScheduleComponent } from './admin/schedule/schedule.component';
+import {FullCalendarModule} from "@fullcalendar/angular";
 
 @NgModule({
   imports: [
@@ -21,6 +25,7 @@ import { CreateGroupComponent } from './admin/groupe/create-group/create-group.c
     RouterModule,
     FormsModule,
     MatSlideToggleModule,
+    FullCalendarModule,
     MatSelectModule,
     NgbModule
   ],
@@ -33,7 +38,10 @@ import { CreateGroupComponent } from './admin/groupe/create-group/create-group.c
     SpecialityComponent,
     GroupeComponent,
     CreateSpecialityComponent,
-    CreateGroupComponent
+    CreateGroupComponent,
+    ModuleListComponent,
+    ModuleCreateComponent,
+    ScheduleComponent
   ],
   exports: [
     FooterComponent,

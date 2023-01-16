@@ -1,0 +1,86 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card bg-default shadow">
+        <div class="card-header row bg-white border-0">
+          <div class="col-md-3">
+            <h3 class="text-black-50 d-inline-block mb-0">Notes</h3>
+
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-control-label">filter by student</label>
+              <select class="form-control form-control-alternative" (ngModelChange)="filterByStudent($event)"
+                      [(ngModel)]="student">
+                <option [ngValue]="null">All</option>
+                <option *ngFor="let g of students" [ngValue]="g">{{g?.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-control-label">filter by module</label>
+              <select class="form-control form-control-alternative" (ngModelChange)="filterByModule($event)"
+                      [(ngModel)]="module">
+                <option [ngValue]="null">All</option>
+                <option *ngFor="let g of modules" [ngValue]="g">{{g?.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <button type="button" (click)="openNewNote()" class="btn float-right btn-success">New note</button>
+          </div>
+
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-dark table-flush">
+            <thead class="thead-dark">
+            <tr>
+              <th scope="col">Student name</th>
+              <th scope="col">Module</th>
+              <th scope="col">note</th>
+              <th scope="col">action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let note of notes">
+              <th scope="row">
+                {{note?.student?.name}}
+              </th>
+
+              <td>
+                {{note?.module?.name}}
+              </td>
+              <td>
+                {{note?.studentNote}}
+              </td>
+
+              <td>
+                <button type="button"
+                        (click)="openUpdate(note)"
+                        class="btn btn-warning">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+
+              </td>
+
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-create-note *ngIf="showEdit"></app-create-note>

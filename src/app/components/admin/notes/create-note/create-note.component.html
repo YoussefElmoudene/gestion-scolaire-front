@@ -1,0 +1,61 @@
+<div class="modal modal-dialog-centered" id="myModal" tabindex="-1" aria-labelledby="myModal">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title heading-small text-muted mb-4" id="exampleModalLabel">
+          Note information
+        </h5>
+      </div>
+
+
+      <div class="modal-body">
+        <div style="background: #F7FAFC;" class="card-body">
+          <form>
+            <div class="pl-lg-4">
+
+              <div class="row">
+
+
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label">student</label>
+                    <select class="form-control form-control-alternative"
+                            [(ngModel)]="student">
+                      <option *ngFor="let g of students" [ngValue]="g">{{g?.name}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label">module</label>
+                    <select class="form-control form-control-alternative"
+                            [(ngModel)]="module">
+                      <option [ngValue]="null">All</option>
+                      <option *ngFor="let g of modules" [ngValue]="g">{{g?.name}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Note</label>
+                    <input type="number" id="input-username" class="form-control form-control-alternative"
+                           placeholder="Full name" [(ngModel)]="selectedNote.studentNote" name="name">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="showEdit = false" class="btn btn-secondary" data-bs-dismiss="modal">Close
+        </button>
+        <button type="button" (click)="save()" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,6 +10,8 @@ import {SpecialityComponent} from "../../components/admin/speciality/speciality.
 import {GroupeComponent} from "../../components/admin/groupe/groupe.component";
 import {ModuleListComponent} from "../../components/admin/module/module-list/module-list.component";
 import {ScheduleComponent} from "../../components/admin/schedule/schedule.component";
+import {MainGroupStudentComponent} from "../../components/admin/users/main-group-student/main-group-student.component";
+import {NoteListComponent} from "../../components/admin/notes/note-list/note-list.component";
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -17,7 +19,8 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'users',         component: UserListComponent },
     { path: 'specialite',         component: SpecialityComponent },
     { path: 'modules',         component: ModuleListComponent},
-    { path: 'groups',         component: GroupeComponent },
+    { path: 'groups',         component: MainGroupStudentComponent },
+    { path: 'notes',         component: NoteListComponent },
     { path: 'schedule',         component: ScheduleComponent },
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: TablesComponent }

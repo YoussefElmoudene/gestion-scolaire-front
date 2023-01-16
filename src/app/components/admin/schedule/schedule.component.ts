@@ -31,7 +31,6 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
         buttonText: 'Week',
         title: 'Schedule',
         columnFormat: 'dddd', // Format the day to only show like 'Monday'
-        hiddenDays: [0, 6] // Hide Sunday and Saturday?
       }
     },
     eventMouseEnter: function(info) {

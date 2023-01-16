@@ -18,6 +18,12 @@ import { ModuleListComponent } from './admin/module/module-list/module-list.comp
 import { ModuleCreateComponent } from './admin/module/module-create/module-create.component';
 import { ScheduleComponent } from './admin/schedule/schedule.component';
 import {FullCalendarModule} from "@fullcalendar/angular";
+import { MainGroupStudentComponent } from './admin/users/main-group-student/main-group-student.component';
+import { StudentsComponent } from './admin/users/students/students.component';
+import {MatButtonModule} from "@angular/material/button";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import { CreateNoteComponent } from './admin/notes/create-note/create-note.component';
+import { NoteListComponent } from './admin/notes/note-list/note-list.component';
 
 @NgModule({
   imports: [
@@ -27,7 +33,10 @@ import {FullCalendarModule} from "@fullcalendar/angular";
     MatSlideToggleModule,
     FullCalendarModule,
     MatSelectModule,
-    NgbModule
+    NgbModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatSelectModule
   ],
   declarations: [
     FooterComponent,
@@ -41,7 +50,11 @@ import {FullCalendarModule} from "@fullcalendar/angular";
     CreateGroupComponent,
     ModuleListComponent,
     ModuleCreateComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    MainGroupStudentComponent,
+    StudentsComponent,
+    CreateNoteComponent,
+    NoteListComponent
   ],
   exports: [
     FooterComponent,

@@ -346,7 +346,7 @@ export const chartExample2 = {
     labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [
       {
-        label: "Sales",
+        label: "Specialities",
         data: [25, 20, 30, 22, 17, 29],
         maxBarThickness: 10
       }

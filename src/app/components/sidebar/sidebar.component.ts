@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {AuthService} from "../../controller/service/auth.service";
 
 declare interface RouteInfo {
   path: string;
@@ -16,12 +17,22 @@ export const ROUTES: RouteInfo[] = [
   {path: '/notes', title: 'Notes', icon: ' ni ni-ruler-pencil text-primary', class: ''},
   {path: '/absence', title: 'Absences', icon: ' ni ni-badge text-primary', class: ''},
   {path: '/schedule', title: 'Schedule', icon: ' ni ni-calendar-grid-58 text-primary', class: ''},
-  {path: '/icons', title: 'Icons', icon: 'ni-planet text-primary', class: ''},
-  {path: '/maps', title: 'Maps', icon: 'ni-pin-3 text-primary', class: ''},
-  {path: '/user-profile', title: 'User profile', icon: 'ni-single-02 text-primary', class: ''},
   {path: '/users', title: 'All users', icon: 'ni-single-02 text-primary', class: ''},
-  {path: '/login', title: 'Login', icon: 'ni-key-25 text-primary', class: ''},
-  {path: '/register', title: 'Register', icon: 'ni-circle-08 text-primary', class: ''}
+  {path: '/user-profile', title: 'User profile', icon: 'ni-single-02 text-primary', class: ''},
+];
+export const TEACHER_ROUTES: RouteInfo[] = [
+  {path: '/dashboard', title: 'Dashboard', icon: 'ni-tv-2 text-primary', class: ''},
+  {path: '/notes', title: 'Notes', icon: ' ni ni-ruler-pencil text-primary', class: ''},
+  {path: '/absence', title: 'Absences', icon: ' ni ni-badge text-primary', class: ''},
+  {path: '/schedule', title: 'Schedule', icon: ' ni ni-calendar-grid-58 text-primary', class: ''},
+  {path: '/user-profile', title: 'User profile', icon: 'ni-single-02 text-primary', class: ''},
+];
+export const STUDENT_ROUTES: RouteInfo[] = [
+  {path: '/dashboard', title: 'Dashboard', icon: 'ni-tv-2 text-primary', class: ''},
+  {path: '/notes', title: 'Notes', icon: ' ni ni-ruler-pencil text-primary', class: ''},
+  {path: '/absence', title: 'Absences', icon: ' ni ni-badge text-primary', class: ''},
+  {path: '/schedule', title: 'Schedule', icon: ' ni ni-calendar-grid-58 text-primary', class: ''},
+  {path: '/user-profile', title: 'User profile', icon: 'ni-single-02 text-primary', class: ''},
 ];
 
 @Component({
@@ -34,11 +45,21 @@ export class SidebarComponent implements OnInit {
   public menuItems: any[];
   public isCollapsed = true;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+    if (this.authService.getUserFromLocalCache() !== null) {
+      const role = this.authService.getUserFromLocalCache().role;
+      if (role === 'ADMIN') {
+        this.menuItems = ROUTES.filter(menuItem => menuItem);
+      } else if (role === 'STUDENT') {
+        this.menuItems = STUDENT_ROUTES.filter(menuItem => menuItem);
+      } else {
+        this.menuItems = TEACHER_ROUTES.filter(menuItem => menuItem);
+      }
+    }
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
     });

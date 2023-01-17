@@ -8,6 +8,7 @@ import {ScheduleService} from "../../../controller/service/schedule.service";
 import {Seance} from "../../../controller/modules/seance";
 import {Groupe} from "../../../controller/modules/groupe.model";
 import {GroupeService} from "../../../controller/service/groupe.service";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-schedule',
@@ -44,6 +45,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   groupe: Groupe = null;
 
   constructor(private scheduleService: ScheduleService,
+              public datepipe: DatePipe,
               private groupeService: GroupeService) {
   }
 
@@ -67,7 +69,16 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
 
 
   handleDateClick(arg) {
-    alert('date click! ' + arg.dateStr);
+    console.log(arg);
+    const start: Date = new Date(arg.date);
+    let seance = new Seance();
+    seance.startTime = start.getHours().toString();
+    seance.endTime = (start.getHours() + 1).toString();
+    seance.allDay = false;
+    seance.daysOfWeek = [start.getDay()];
+    seance.title = 'JAVA (Group-1)';
+    seance.groupId = 'G-1';
+    console.log(seance);
   }
 
   ngOnInit() {

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
+import {AuthService} from "../../controller/service/auth.service";
 
 @Component({
   selector: 'app-admin-layout',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminLayoutComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private router: Router,
+              private authService: AuthService) {
   }
 
+  ngOnInit() {
+    if (this.authService.getUserFromLocalCache() !== null) {
+      this.router.navigate(['/dashboard'])
+    } else {
+      this.router.navigate(['/login'])
+    }
+  }
 }

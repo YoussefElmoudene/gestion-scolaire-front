@@ -13,10 +13,19 @@ export class GroupeService {
   private _showEdit: boolean;
   private _groupes: Array<Groupe> = new Array<Groupe>();
   private _selectedGroupe: Groupe = new Groupe();
+  private _currentGroup: Groupe = new Groupe();
 
   constructor(private http: HttpClient) {
   }
 
+
+  get currentGroup(): Groupe {
+    return this._currentGroup;
+  }
+
+  set currentGroup(value: Groupe) {
+    this._currentGroup = value;
+  }
 
   get groupes(): Array<Groupe> {
     return this._groupes;

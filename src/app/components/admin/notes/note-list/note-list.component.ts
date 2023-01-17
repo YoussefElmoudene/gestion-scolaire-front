@@ -12,15 +12,19 @@ import {Note} from "../../../../controller/modules/note.model";
   styleUrls: ['./note-list.component.css']
 })
 export class NoteListComponent implements OnInit {
-  module: Module = new Module();
+  module: Module = null;
   modules: Array<Module> = new Array<Module>();
-  student: Student;
+  student: Student = null;
   students: Array<Student> = new Array<Student>();
 
   constructor(private studentService: StudentService,
               private noteService: NoteService,
               private moduleService: ModuleService,
   ) {
+  }
+
+  get currentStudent(): Student {
+    return this.studentService.currentStudent;
   }
 
   get notes(): Array<Note> {
@@ -49,9 +53,16 @@ export class NoteListComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log(this.currentStudent)
     this.moduleService.getAll().subscribe(d => this.modules = d);
     this.studentService.getAll().subscribe(data => this.students = data);
-    this.getAllNotes();
+    if (this.currentStudent?.id !== 0 && this.currentStudent !== null && this.currentStudent !== undefined) {
+      this.filterByStudent(this.currentStudent);
+      this.student = this.currentStudent
+    } else {
+      this.getAllNotes();
+    }
+
   }
 
   getAllNotes() {
@@ -59,6 +70,7 @@ export class NoteListComponent implements OnInit {
   }
 
   filterByStudent(student: Student) {
+    this.student = student;
     if (student === null) {
       this.getAllNotes();
     } else {
@@ -71,6 +83,7 @@ export class NoteListComponent implements OnInit {
   }
 
   filterByModule(module: Module) {
+    this.module = module;
     if (module === null) {
       this.getAllNotes();
     } else {

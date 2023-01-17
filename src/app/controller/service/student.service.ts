@@ -12,10 +12,19 @@ export class StudentService {
   private _showEdit: boolean;
   private _students: Array<Student> = new Array<Student>();
   private _selectedStudent: Student;
+  private _currentStudent: Student;
 
   constructor(private http: HttpClient) {
   }
 
+
+  get currentStudent(): Student {
+    return this._currentStudent;
+  }
+
+  set currentStudent(value: Student) {
+    this._currentStudent = value;
+  }
 
   get students(): Array<Student> {
     return this._students;

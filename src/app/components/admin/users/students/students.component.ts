@@ -1,12 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {UserService} from "../../../../controller/service/user.service";
-import {User} from "../../../../controller/modules/user.model";
+import {Component, OnInit} from '@angular/core';
 import {StudentService} from "../../../../controller/service/student.service";
 import {Student} from "../../../../controller/modules/student.model";
 import {Groupe} from "../../../../controller/modules/groupe.model";
-import {Specialite} from "../../../../controller/modules/specialite.model";
 import {GroupeService} from "../../../../controller/service/groupe.service";
-import {MatSelectModule} from "@angular/material/select";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-students',
@@ -18,8 +15,17 @@ export class StudentsComponent implements OnInit {
   groupes: Array<Groupe> = new Array<Groupe>();
 
   constructor(private studentService: StudentService,
+              private router: Router,
               private groupeService: GroupeService,
   ) {
+  }
+
+  get currentStudent(): Student {
+    return this.studentService.currentStudent;
+  }
+
+  set currentStudent(value: Student) {
+    this.studentService.currentStudent = value;
   }
 
   get students(): Array<Student> {
@@ -52,9 +58,19 @@ export class StudentsComponent implements OnInit {
 
   filterByGroup() {
     this.studentService.getAll().subscribe(data => {
-      this.students = data.filter(d =>d.groupeId === this.groupe.id);
+      this.students = data.filter(d => d.groupeId === this.groupe.id);
     }, error => {
       console.log(error);
     });
+  }
+
+  goToNotes(student: Student) {
+    this.currentStudent = student;
+    this.router.navigate(['/notes']);
+  }
+
+  goToAbsence(student: Student) {
+    this.currentStudent = student;
+    this.router.navigate(['/absence']);
   }
 }

@@ -12,7 +12,23 @@
     <div class="col">
       <div class="card shadow">
         <div class="card-header row border-0">
-          <div class="col-md-4">
+
+          <div class="col-md-5">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a style="color: blue; cursor: pointer" (click)="getAll()">absences</a>
+                </li>
+
+                <li *ngIf="groupe" class="breadcrumb-item active" (click)="filterByGroup(groupe)"
+                    aria-current="page">{{groupe?.name}}</li>
+
+                <li *ngIf="student" class="breadcrumb-item active" (click)="filterByStudent(student)"
+                    aria-current="page">{{student?.name}}</li>
+
+                <li *ngIf="module" class="breadcrumb-item active" (click)="filterByModule(module)"
+                    aria-current="page">{{module?.name}}</li>
+              </ol>
+            </nav>
           </div>
 
           <div class="col-md-2">
@@ -45,8 +61,8 @@
             </div>
           </div>
 
-          <div class="col-md-2">
-            <button type="button" (click)="openNewAbsence()" class="btn float-right btn-success">New absence</button>
+          <div class="col-md-1">
+            <button type="button" (click)="openNewAbsence()" class="btn float-right btn-success">New</button>
           </div>
         </div>
         <div class="table-responsive">

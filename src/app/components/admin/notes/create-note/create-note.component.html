@@ -31,7 +31,6 @@
                     <label class="form-control-label">module</label>
                     <select class="form-control form-control-alternative"
                             [(ngModel)]="module">
-                      <option [ngValue]="null">All</option>
                       <option *ngFor="let g of modules" [ngValue]="g">{{g?.name}}</option>
                     </select>
                   </div>

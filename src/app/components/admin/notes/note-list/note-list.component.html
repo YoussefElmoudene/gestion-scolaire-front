@@ -13,36 +13,49 @@
     <div class="col">
       <div class="card bg-default shadow">
         <div class="card-header row bg-white border-0">
-          <div class="col-md-3">
-            <h3 class="text-black-50 d-inline-block mb-0">Notes</h3>
 
+          <div class="col-md-6">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a style="color: blue; cursor: pointer" (click)="getAllNotes()">notes</a>
+                </li>
+                <li *ngIf="student" class="breadcrumb-item active" (click)="filterByStudent(student)"
+                    aria-current="page">{{student?.name}}</li>
+                <li *ngIf="module" class="breadcrumb-item active" (click)="filterByModule(module)"
+                    aria-current="page">{{module?.name}}</li>
+              </ol>
+            </nav>
           </div>
-          <div class="col-md-3">
+
+
+
+          <div class="col-md-2">
             <div class="form-group">
-              <label class="form-control-label">filter by student</label>
               <select class="form-control form-control-alternative" (ngModelChange)="filterByStudent($event)"
                       [(ngModel)]="student">
-                <option [ngValue]="null">All</option>
+                <option [ngValue]="null">filter by student</option>
                 <option *ngFor="let g of students" [ngValue]="g">{{g?.name}}</option>
               </select>
             </div>
           </div>
-          <div class="col-md-3">
+
+          <div class="col-md-2">
             <div class="form-group">
-              <label class="form-control-label">filter by module</label>
               <select class="form-control form-control-alternative" (ngModelChange)="filterByModule($event)"
                       [(ngModel)]="module">
-                <option [ngValue]="null">All</option>
+                <option [ngValue]="null">filter by module</option>
                 <option *ngFor="let g of modules" [ngValue]="g">{{g?.name}}</option>
               </select>
             </div>
           </div>
 
-          <div class="col-md-3">
+          <div class="col-md-2">
             <button type="button" (click)="openNewNote()" class="btn float-right btn-success">New note</button>
           </div>
 
+
         </div>
+
         <div class="table-responsive">
           <table class="table align-items-center table-dark table-flush">
             <thead class="thead-dark">

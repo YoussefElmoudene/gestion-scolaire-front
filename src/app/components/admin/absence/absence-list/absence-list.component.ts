@@ -27,6 +27,15 @@ export class AbsenceListComponent implements OnInit {
               private studentService: StudentService) {
   }
 
+  get currentGroup(): Groupe {
+    return this.groupeService.currentGroup;
+  }
+
+
+  get currentStudent(): Student {
+    return this.studentService.currentStudent;
+  }
+
   get absences(): Array<Absence> {
     return this.absenceService.absences;
   }
@@ -55,7 +64,15 @@ export class AbsenceListComponent implements OnInit {
     this.groupeService.getAll().subscribe(g => this.groupes = g);
     this.studentService.getAll().subscribe(g => this.students = g);
     this.moduleService.getAll().subscribe(g => this.modules = g);
-    this.getAll();
+    if (this.currentStudent?.id !== 0 && this.currentStudent !== null && this.currentStudent !== undefined) {
+      this.filterByStudent(this.currentStudent);
+      this.student = this.currentStudent
+    } else if (this.currentGroup?.id !== 0 && this.currentGroup !== null && this.currentGroup !== undefined) {
+      this.filterByGroup(this.currentGroup);
+      this.groupe = this.currentGroup
+    } else {
+      this.getAll();
+    }
   }
 
 
@@ -76,6 +93,7 @@ export class AbsenceListComponent implements OnInit {
 
 
   filterByStudent(student: Student) {
+    this.student = student
     if (student === null) {
       this.getAll();
     } else {
@@ -88,6 +106,7 @@ export class AbsenceListComponent implements OnInit {
   }
 
   filterByModule(module: Module) {
+    this.module = module
     if (module === null) {
       this.getAll();
     } else {
@@ -100,6 +119,7 @@ export class AbsenceListComponent implements OnInit {
   }
 
   filterByGroup(groupe: Groupe) {
+    this.groupe = groupe
     if (groupe === null) {
       this.getAll();
     } else {

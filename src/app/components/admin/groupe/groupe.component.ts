@@ -4,6 +4,7 @@ import {GroupeService} from "../../../controller/service/groupe.service";
 import {UserService} from "../../../controller/service/user.service";
 import {StudentService} from "../../../controller/service/student.service";
 import {Student} from "../../../controller/modules/student.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-groupe',
@@ -15,9 +16,16 @@ export class GroupeComponent implements OnInit {
 
   students: Array<Student> = new Array<Student>();
   constructor(private groupeService: GroupeService,
+              private router: Router,
               private studentService: StudentService) {
   }
 
+  get currentGroup(): Groupe {
+    return this.groupeService.currentGroup;
+  }
+  set currentGroup(value: Groupe) {
+    this.groupeService.currentGroup = value;
+  }
   ngOnInit(): void {
     this.groupeService.getAll().subscribe(g => this.groupes = g);
     this.studentService.getAll().subscribe(g => this.students = g);
@@ -61,5 +69,12 @@ export class GroupeComponent implements OnInit {
 
   getNumberOfStudent(group: Groupe): number {
     return this.students.filter(s => s.groupe?.id === group?.id).length;
+  }
+
+
+
+  goToAbsence(groupe: Groupe) {
+    this.currentGroup = groupe;
+    this.router.navigate(['/absence']);
   }
 }

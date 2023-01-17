@@ -66,6 +66,8 @@ export class NoteListComponent implements OnInit {
   }
 
   getAllNotes() {
+    this.student = null;
+    this.module = null;
     this.noteService.getAll().subscribe(data => this.notes = data);
   }
 

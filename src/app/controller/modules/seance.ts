@@ -4,16 +4,15 @@ import {Module} from "./module.model";
 
 export class Seance {
   id = 0;
-  groupe: Groupe = new Groupe();
+  groupe: Groupe;
+  groupId: string;
   teacher: Teacher;
-  module: Module = new Module();
+  teacherId = 0;
+  module: Module;
+  moduleId = 0;
   startTime: string;
   endTime: string;
   daysOfWeek: number[];
-  date: string;
   allDay: boolean;
-  groupId: string;
   title: string;
-  url: string;
-  interactive: boolean;
 }

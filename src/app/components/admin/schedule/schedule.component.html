@@ -2,12 +2,34 @@
   <div class="container-fluid">
     <div class="header-body">
       <div class="row">
+
       </div>
     </div>
   </div>
 </div>
 <div class="container-fluid mt--7">
   <div class="row">
+    <div class="col-md-10">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a style="color: blue; cursor: pointer" (click)="getAll()">seances</a>
+          </li>
+          <li *ngIf="groupe" class="breadcrumb-item active"
+              aria-current="page">{{groupe?.name}}</li>
+        </ol>
+      </nav>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <select class="form-control form-control-alternative" (ngModelChange)="filterByGroup($event)"
+                [(ngModel)]="groupe">
+          <option selected [ngValue]="null">filter by group</option>
+          <option *ngFor="let g of groupes" [ngValue]="g">{{g?.name}}</option>
+        </select>
+      </div>
+    </div>
+
     <div class="col bg-white">
       <full-calendar [options]="calendarOptions"></full-calendar>
 

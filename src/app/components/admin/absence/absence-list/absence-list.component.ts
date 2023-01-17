@@ -77,6 +77,9 @@ export class AbsenceListComponent implements OnInit {
 
 
   getAll() {
+    this.groupe = null;
+    this.student = null;
+    this.module = null;
     this.absenceService.getAll().subscribe(g => this.absences = g);
   }
 

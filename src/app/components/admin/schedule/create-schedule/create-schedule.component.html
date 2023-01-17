@@ -1,0 +1,80 @@
+<div class="modal modal-dialog-centered" id="myModal" tabindex="-1" aria-labelledby="myModal">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title heading-small text-muted mb-4" id="exampleModalLabel">
+          Seance information
+        </h5>
+      </div>
+
+
+      <div class="modal-body">
+        <div style="background: #F7FAFC;" class="card-body">
+          <form>
+            <div class="pl-lg-4">
+
+              <div class="row">
+
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Start time</label>
+                    <input type="text" class="form-control form-control-alternative"
+                           placeholder="Date" [(ngModel)]="selectedSeance.startTime" name="startTime">
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">End time</label>
+                    <input type="text" id="input-username" class="form-control form-control-alternative"
+                           placeholder="Date" [(ngModel)]="selectedSeance.endTime" name="endTime">
+                  </div>
+                </div>
+
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label">Group</label>
+                    <select class="form-control form-control-alternative"
+                            [(ngModel)]="groupe">
+                      <option *ngFor="let g of groupes" [ngValue]="g">{{g?.name}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label">Teacher</label>
+                    <select class="form-control form-control-alternative"
+                            [(ngModel)]="teacher">
+                      <option *ngFor="let g of teachers" [ngValue]="g">{{g?.name}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label">module</label>
+                    <select class="form-control form-control-alternative"
+                            [(ngModel)]="module">
+                      <option *ngFor="let g of modules" [ngValue]="g">{{g?.name}}</option>
+                    </select>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="showEdit = false" class="btn btn-secondary" data-bs-dismiss="modal">Close
+        </button>
+        <button type="button" (click)="save()" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

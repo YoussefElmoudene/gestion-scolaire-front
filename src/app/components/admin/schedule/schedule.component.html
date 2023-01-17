@@ -30,9 +30,11 @@
       </div>
     </div>
 
+
     <div class="col bg-white">
       <full-calendar [options]="calendarOptions"></full-calendar>
 
     </div>
   </div>
 </div>
+<app-create-schedule *ngIf="showEdit"></app-create-schedule>

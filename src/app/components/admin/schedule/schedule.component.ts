@@ -40,7 +40,6 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     },
   };
 
-  schedules: Array<Seance> = new Array<Seance>();
   groupes: Array<Groupe> = new Array<Groupe>();
   groupe: Groupe = null;
 
@@ -54,17 +53,28 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   }
 
 
-  ngAfterViewInit(): void {
-    const schedule: Seance = new Seance();
-    schedule.startTime = '12:00:00.000000';
-    schedule.endTime = '14:00:00.000000';
-    schedule.allDay = false;
-    schedule.daysOfWeek = [1];
-    schedule.title = 'JAVA (Group-1)';
-    schedule.groupId = 'G-1';
-    this.schedules.push({...schedule});
-    // @ts-ignore
-    this.calendarOptions.events = this.schedules;
+  get seances(): Array<Seance> {
+    return this.scheduleService.seances;
+  }
+
+  set seances(value: Array<Seance>) {
+    this.scheduleService.seances = value;
+  }
+
+  get showEdit(): boolean {
+    return this.scheduleService.showEdit;
+  }
+
+  set showEdit(value: boolean) {
+    this.scheduleService.showEdit = value;
+  }
+
+  get selectedSeance(): Seance {
+    return this.scheduleService.selectedSeance;
+  }
+
+  set selectedSeance(value: Seance) {
+    this.scheduleService.selectedSeance = value;
   }
 
 
@@ -72,29 +82,44 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     console.log(arg);
     const start: Date = new Date(arg.date);
     let seance = new Seance();
-    seance.startTime = start.getHours().toString();
-    seance.endTime = (start.getHours() + 1).toString();
+    seance.startTime = start.getHours() + ':00:00';
+    seance.endTime = (start.getHours() + 1) + ':00:00';
     seance.allDay = false;
-    seance.daysOfWeek = [start.getDay()];
-    seance.title = 'JAVA (Group-1)';
-    seance.groupId = 'G-1';
+    seance.daysOfWeek = '[' + start.getDay() + ']';
     console.log(seance);
+    this.selectedSeance = seance;
+    this.showEdit = true;
   }
 
   ngOnInit() {
+    this.groupeService.getAll().subscribe(d => this.groupes = d);
   }
+
+  ngAfterViewInit(): void {
+    this.getAll();
+  }
+
 
   filterByGroup(groupe: Groupe) {
     this.groupe = groupe
     if (groupe === null) {
       this.getAll();
     } else {
+      this.scheduleService.getAll().subscribe(d => {
+        console.log(d);
+        this.seances = d.filter(g => g.groupId === groupe?.id);
+        // @ts-ignore
+        this.calendarOptions.events = this.seances;
+      })
     }
   }
 
   getAll() {
     this.groupe = null;
-    // @ts-ignore
-    this.calendarOptions.events = this.schedules;
+    this.scheduleService.getAll().subscribe(d => {
+      this.seances = d;
+      // @ts-ignore
+      this.calendarOptions.events = this.seances;
+    })
   }
 }

@@ -26,6 +26,7 @@ import { CreateNoteComponent } from './admin/notes/create-note/create-note.compo
 import { NoteListComponent } from './admin/notes/note-list/note-list.component';
 import { AbsenceListComponent } from './admin/absence/absence-list/absence-list.component';
 import { AbsenceCreateComponent } from './admin/absence/absence-create/absence-create.component';
+import { CreateScheduleComponent } from './admin/schedule/create-schedule/create-schedule.component';
 
 @NgModule({
   imports: [
@@ -58,7 +59,8 @@ import { AbsenceCreateComponent } from './admin/absence/absence-create/absence-c
     CreateNoteComponent,
     NoteListComponent,
     AbsenceListComponent,
-    AbsenceCreateComponent
+    AbsenceCreateComponent,
+    CreateScheduleComponent
   ],
   exports: [
     FooterComponent,

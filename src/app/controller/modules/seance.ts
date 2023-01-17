@@ -5,14 +5,14 @@ import {Module} from "./module.model";
 export class Seance {
   id = 0;
   groupe: Groupe;
-  groupId: string;
+  groupId: number;
   teacher: Teacher;
   teacherId = 0;
   module: Module;
   moduleId = 0;
   startTime: string;
   endTime: string;
-  daysOfWeek: number[];
+  daysOfWeek: string;
   allDay: boolean;
   title: string;
 }

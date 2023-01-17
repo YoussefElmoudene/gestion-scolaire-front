@@ -2,7 +2,7 @@ import {Groupe} from "./groupe.model";
 import {Teacher} from "./teacher.model";
 import {Module} from "./module.model";
 
-export class Schedule {
+export class Seance {
   id = 0;
   groupe: Groupe = new Groupe();
   teacher: Teacher;

@@ -24,6 +24,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { CreateNoteComponent } from './admin/notes/create-note/create-note.component';
 import { NoteListComponent } from './admin/notes/note-list/note-list.component';
+import { AbsenceListComponent } from './admin/absence/absence-list/absence-list.component';
+import { AbsenceCreateComponent } from './admin/absence/absence-create/absence-create.component';
 
 @NgModule({
   imports: [
@@ -54,7 +56,9 @@ import { NoteListComponent } from './admin/notes/note-list/note-list.component';
     MainGroupStudentComponent,
     StudentsComponent,
     CreateNoteComponent,
-    NoteListComponent
+    NoteListComponent,
+    AbsenceListComponent,
+    AbsenceCreateComponent
   ],
   exports: [
     FooterComponent,

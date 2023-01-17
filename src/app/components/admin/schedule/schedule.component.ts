@@ -6,7 +6,7 @@ import {FullCalendarComponent} from "@fullcalendar/angular";
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import {ScheduleService} from "../../../controller/service/schedule.service";
-import {Schedule} from "../../../controller/modules/schedule";
+import {Seance} from "../../../controller/modules/seance";
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -38,13 +38,13 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     },
   };
 
-  schedules: Array<Schedule> =new Array<Schedule>();
+  schedules: Array<Seance> =new Array<Seance>();
 
   constructor(private scheduleService: ScheduleService) {
   }
 
   ngAfterViewInit(): void {
-    const schedule: Schedule = new Schedule();
+    const schedule: Seance = new Seance();
     schedule.startTime = '12:00:00.000000';
     schedule.endTime = '14:00:00.000000';
     schedule.allDay = false;

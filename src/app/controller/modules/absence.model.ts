@@ -4,7 +4,7 @@ import {Groupe} from "./groupe.model";
 
 export class Absence {
   id = 0;
-  date: Date;
+  date: Date = new Date();
   student: Student;
   studentId = 0;
   groupe: Groupe;

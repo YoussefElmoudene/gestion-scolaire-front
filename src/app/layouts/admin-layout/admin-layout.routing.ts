@@ -12,6 +12,7 @@ import {ModuleListComponent} from "../../components/admin/module/module-list/mod
 import {ScheduleComponent} from "../../components/admin/schedule/schedule.component";
 import {MainGroupStudentComponent} from "../../components/admin/users/main-group-student/main-group-student.component";
 import {NoteListComponent} from "../../components/admin/notes/note-list/note-list.component";
+import {AbsenceListComponent} from "../../components/admin/absence/absence-list/absence-list.component";
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -21,6 +22,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'modules',         component: ModuleListComponent},
     { path: 'groups',         component: MainGroupStudentComponent },
     { path: 'notes',         component: NoteListComponent },
+    { path: 'absence',         component: AbsenceListComponent },
     { path: 'schedule',         component: ScheduleComponent },
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: TablesComponent }

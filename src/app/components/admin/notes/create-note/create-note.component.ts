@@ -76,6 +76,8 @@ export class CreateNoteComponent implements OnInit {
     } else { // update
       this.selectedNote.moduleId = this.module.id;
       this.selectedNote.module = null;
+      this.selectedNote.studentId = this.student.id;
+      this.selectedNote.student = null;
       this.noteService.update(this.selectedNote).subscribe(d => {
         console.log(d)
         this.toastr.info('Note updated successfully');

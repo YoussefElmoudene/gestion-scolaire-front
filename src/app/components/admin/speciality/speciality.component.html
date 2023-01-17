@@ -3,7 +3,7 @@
     <div class="header-body">
       <!-- Card stats -->
       <div class="row">
-        <div class="col-xl-12 mb-4 col-lg-12">
+        <div class="col-xl-12 my-4 col-lg-12">
           <div class="row">
             <div class="col-xl-12 mb-4 col-lg-12">
               <button type="button" (click)="openNewSpecialty()" class="btn float-right btn-success">New Speciality</button>
@@ -19,8 +19,8 @@
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <h5 class="card-title  text-muted mb-0">{{getNumberOfModules(specialite)}} module</h5>
-                  <span class="h2 text-uppercase font-weight-bold mb-0"> {{specialite?.name}}</span>
+                  <p class="card-title   mb-0">{{getNumberOfModules(specialite)}} module</p>
+                  <span class="h5 text-uppercase font-weight-500 mb-0"> {{specialite?.name}}</span>
                 </div>
                 <div class="col-auto">
                   <div class="icon icon-shape bg-danger text-white rounded-circle shadow">

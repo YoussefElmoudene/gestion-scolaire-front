@@ -9,6 +9,7 @@ import {Seance} from "../../../controller/modules/seance";
 import {Groupe} from "../../../controller/modules/groupe.model";
 import {GroupeService} from "../../../controller/service/groupe.service";
 import {DatePipe} from "@angular/common";
+import {ExportAsConfig, ExportAsService} from "ngx-export-as";
 
 @Component({
   selector: 'app-schedule',
@@ -21,7 +22,13 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     plugins: [timeGridPlugin, dayGridPlugin, timeGridPlugin, interactionPlugin],
     initialView: 'timeGridFourDay',
     dateClick: this.handleDateClick.bind(this), // bind is important!
-    headerToolbar: {},
+    headerToolbar: {
+      right: '',
+      center: '',
+      start: '',
+      left: '',
+      end: '',
+    },
     allDaySlot: true,
     slotMinTime: "08:00:00",
     slotMaxTime: "19:00:00",
@@ -43,9 +50,41 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   groupes: Array<Groupe> = new Array<Groupe>();
   groupe: Groupe = null;
 
+  exportAsConfig: ExportAsConfig = {
+    type: 'pdf',
+    elementIdOrContent: 'print',
+    download: false,
+    fileName: 'emploi du temps',
+    options: {
+      orientation: '',
+      margins: {},
+    }
+  };
+
+  exportAsConfigpng: ExportAsConfig = {
+    type: 'png',
+    elementIdOrContent: 'print',
+    download: false,
+    fileName: 'emploi du temps',
+    options: {
+      orientation: 'portrait',
+      width: 1100,
+      height: 900
+    }
+  };
+
   constructor(private scheduleService: ScheduleService,
               public datepipe: DatePipe,
+              private exportAsService: ExportAsService,
               private groupeService: GroupeService) {
+  }
+
+  export(): void {
+    this.exportAsService.save(this.exportAsConfigpng, 'emploi de temps de ' + this.groupe?.name).subscribe(() => {
+    });
+    this.exportAsService.get(this.exportAsConfigpng).subscribe(content => {
+      console.log(content);
+    });
   }
 
   get currentGroup(): Groupe {

@@ -9,7 +9,7 @@
 </div>
 <div class="container-fluid mt--7">
   <div class="row">
-    <div class="col-md-10">
+    <div class="col-md-8">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a style="color: blue; cursor: pointer" (click)="getAll()">seances</a>
@@ -21,6 +21,9 @@
     </div>
 
     <div class="col-md-2">
+      <button type="button" (click)="export()" class="btn float-right btn-light">export</button>
+    </div>
+    <div class="col-md-2">
       <div class="form-group">
         <select class="form-control form-control-alternative" (ngModelChange)="filterByGroup($event)"
                 [(ngModel)]="groupe">
@@ -31,10 +34,10 @@
     </div>
 
 
-    <div class="col bg-white">
+    <div id="print" class="col-md-12 bg-white">
       <full-calendar [options]="calendarOptions"></full-calendar>
-
     </div>
+
   </div>
 </div>
 <app-create-schedule *ngIf="showEdit"></app-create-schedule>

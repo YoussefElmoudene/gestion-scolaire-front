@@ -2,10 +2,10 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import Chart from 'chart.js';
 
 // core components
-import {chartExample1, chartOptions, parseOptions} from "../../variables/charts";
+import {chartOptions, parseOptions} from "../../variables/charts";
 import {UserService} from "../../controller/service/user.service";
 import {User} from "../../controller/modules/user.model";
-import {Sp_Student, Specialite} from "../../controller/modules/specialite.model";
+import {Group_Student, Sp_Student, Specialite} from "../../controller/modules/specialite.model";
 import {SpecialiteService} from "../../controller/service/specialite.service";
 import {Module} from "../../controller/modules/module.model";
 import {ModuleService} from "../../controller/service/module.service";
@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   specialties: Array<Specialite> = new Array<Specialite>();
   modules: Array<Module> = new Array<Module>();
   numberOfStudentPerSpeciality: Array<Sp_Student> = new Array<Sp_Student>();
+  numberOfStudentPerGroup: Array<Group_Student> = new Array<Group_Student>();
 
   constructor(private userService: UserService,
               private moduleService: ModuleService,
@@ -41,7 +42,23 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     const timer = setInterval(() => {
       clearInterval(timer);
-      console.log(this.numberOfStudentPerSpeciality)
+      parseOptions(Chart, chartOptions());
+
+      var chartSales = document.getElementById('chart-sales');
+
+      this.salesChart = new Chart(chartSales, {
+        type: 'bar',
+        data: {
+          labels: this.numberOfStudentPerGroup.map(row => row.group),
+          datasets: [
+            {
+              label: 'Number of students',
+              data: this.numberOfStudentPerGroup.map(row => row.nrStudent),
+            }
+          ]
+        }
+      });
+
       new Chart(
         document.getElementById('chart-orders'),
         {
@@ -50,7 +67,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             labels: this.numberOfStudentPerSpeciality.map(row => row.speciality),
             datasets: [
               {
-                label: 'speciality by nrStudent',
+                label: 'Number of students',
                 data: this.numberOfStudentPerSpeciality.map(row => row.nrStudent),
               }
             ]
@@ -75,25 +92,25 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.specialiteService.getAll().subscribe(u => this.specialties = u);
     this.moduleService.getAll().subscribe(u => this.modules = u);
 
-    this.datasets = [
-      [0, 20, 10, 30, 15, 40, 20, 60, 60],
-      [0, 20, 5, 25, 10, 30, 15, 40, 40]
-    ];
-    this.data = this.datasets[0];
 
-
-    parseOptions(Chart, chartOptions());
-
-    var chartSales = document.getElementById('chart-sales');
-
-    this.salesChart = new Chart(chartSales, {
-      type: 'line',
-      options: chartExample1.options,
-      data: chartExample1.data
-    });
     this.getNumberOfStudentInSpeciality();
+    this.getNumberOfStudentInGroup();
   }
 
+
+  getNumberOfStudentInGroup() {
+    this.groupeService.getAll().subscribe(groupes => {
+      for (let groupe of groupes) {
+        this.studentService.getAll().subscribe(students => {
+          const numberOfStudent = students.filter(s => s.groupeId === groupe.id).length;
+          let groupStudent = new Group_Student();
+          groupStudent.group = groupe.name;
+          groupStudent.nrStudent = numberOfStudent;
+          this.numberOfStudentPerGroup.push({...groupStudent});
+        })
+      }
+    })
+  }
 
   getNumberOfStudentInSpeciality() {
     this.specialiteService.getAll().subscribe(specialties => {

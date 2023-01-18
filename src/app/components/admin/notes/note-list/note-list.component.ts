@@ -5,6 +5,9 @@ import {Module} from "../../../../controller/modules/module.model";
 import {ModuleService} from "../../../../controller/service/module.service";
 import {NoteService} from "../../../../controller/service/note.service";
 import {Note} from "../../../../controller/modules/note.model";
+import {AuthService} from "../../../../controller/service/auth.service";
+import {User} from "../../../../controller/modules/user.model";
+import {ExportAsConfig, ExportAsService} from "ngx-export-as";
 
 @Component({
   selector: 'app-note-list',
@@ -12,6 +15,7 @@ import {Note} from "../../../../controller/modules/note.model";
   styleUrls: ['./note-list.component.css']
 })
 export class NoteListComponent implements OnInit {
+  user: any;
   module: Module = null;
   modules: Array<Module> = new Array<Module>();
   student: Student = null;
@@ -19,6 +23,8 @@ export class NoteListComponent implements OnInit {
 
   constructor(private studentService: StudentService,
               private noteService: NoteService,
+              private authService: AuthService,
+              private exportAsService: ExportAsService,
               private moduleService: ModuleService,
   ) {
   }
@@ -53,16 +59,20 @@ export class NoteListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.currentStudent)
+    this.user = this.authService.getUserFromLocalCache();
     this.moduleService.getAll().subscribe(d => this.modules = d);
     this.studentService.getAll().subscribe(data => this.students = data);
-    if (this.currentStudent?.id !== 0 && this.currentStudent !== null && this.currentStudent !== undefined) {
-      this.filterByStudent(this.currentStudent);
-      this.student = this.currentStudent
-    } else {
-      this.getAllNotes();
-    }
 
+    if (this.user.role === 'STUDENT') {
+      this.noteService.getAll().subscribe(data => this.notes = data.filter(d => d.studentId === this.user.id));
+    } else {
+      if (this.currentStudent?.id !== 0 && this.currentStudent !== null && this.currentStudent !== undefined) {
+        this.filterByStudent(this.currentStudent);
+        this.student = this.currentStudent
+      } else {
+        this.getAllNotes();
+      }
+    }
   }
 
   getAllNotes() {
@@ -106,5 +116,23 @@ export class NoteListComponent implements OnInit {
     this.selectedNote = note;
     this.showEdit = true;
   }
+  exportAsConfig: ExportAsConfig = {
+    type: 'pdf',
+    elementIdOrContent: 'print',
+    download: false,
+    fileName: 'les notes',
+    options: {
+      orientation: '',
+      margins: {},
+    }
+  };
+  export(): void {
+    this.exportAsService.save(this.exportAsConfig, 'les notes').subscribe(() => {
+    });
+    this.exportAsService.get(this.exportAsConfig).subscribe(content => {
+      console.log(content);
+    });
+  }
+
 }
 

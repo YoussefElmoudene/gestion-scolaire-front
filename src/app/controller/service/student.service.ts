@@ -62,7 +62,7 @@ export class StudentService {
     return this.http.get<Student[]>(this.url + 'Get');
   }
 
-  public findById(StudentId: number): Observable<Student> {
-    return this.http.get<Student>(this.url + 'GetById/' + StudentId);
+  public findById(studentId: number): Observable<Student> {
+    return this.http.get<Student>(this.url + 'GetById/' + studentId);
   }
 }

@@ -32,13 +32,15 @@ export class AuthService {
   }
 
 
-  public addUserToLocalCache(user: User): void {
+  public addUserToLocalCache(user: any): void {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
-  public getUserFromLocalCache(): User {
+  public getUserFromLocalCache(): any {
     return JSON.parse(localStorage.getItem('user'));
   }
+
+
 
 
 }

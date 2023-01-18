@@ -84,6 +84,7 @@
                 </div>
               </div>
               <div class="row">
+
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-city">Role</label>
@@ -92,6 +93,26 @@
                            [(ngModel)]="user.role" name="role">
                   </div>
                 </div>
+
+                <div *ngIf="user?.role === 'STUDENT'" class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" >Group</label>
+                    <input disabled type="text"  class="form-control form-control-alternative"
+                           placeholder="Role"
+                           [(ngModel)]="user.groupe.name" name="groupe">
+                  </div>
+                </div>
+
+                <div *ngIf="user?.role === 'TEACHER'" class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" >Speciality</label>
+                    <input disabled type="text"  class="form-control form-control-alternative"
+                           placeholder="Speciality"
+                           [(ngModel)]="user.specialite.name" name="specialite">
+                  </div>
+                </div>
+
+
               </div>
             </div>
             <hr class="my-4"/>

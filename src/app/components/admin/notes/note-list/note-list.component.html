@@ -23,13 +23,16 @@
                     aria-current="page">{{student?.name}}</li>
                 <li *ngIf="module" class="breadcrumb-item active" (click)="filterByModule(module)"
                     aria-current="page">{{module?.name}}</li>
+
+                <li *ngIf="user?.role === 'STUDENT'" class="breadcrumb-item active" (click)="filterByModule(module)"
+                    aria-current="page">{{user?.groupe?.name}}</li>
               </ol>
             </nav>
           </div>
 
 
 
-          <div class="col-md-2">
+          <div *ngIf="user?.role !== 'STUDENT'" class="col-md-2">
             <div class="form-group">
               <select class="form-control form-control-alternative" (ngModelChange)="filterByStudent($event)"
                       [(ngModel)]="student">
@@ -49,21 +52,26 @@
             </div>
           </div>
 
-          <div class="col-md-2">
-            <button type="button" (click)="openNewNote()" class="btn float-right btn-success">New note</button>
+          <div  *ngIf="user?.role !== 'STUDENT'" class="col-md-1">
+            <button type="button" (click)="openNewNote()" class="btn float-right btn-success">New</button>
           </div>
 
+          <div class="col-md-1">
+            <button type="button" ngbTooltip="Export" (click)="export()" class="btn float-right btn-light">
+              <i class="fa-solid fa-file-arrow-down"></i>
+            </button>
+          </div>
 
         </div>
 
-        <div class="table-responsive">
+        <div id="print" class="table-responsive">
           <table class="table align-items-center table-dark table-flush">
             <thead class="thead-dark">
             <tr>
               <th scope="col">Student name</th>
               <th scope="col">Module</th>
               <th scope="col">note</th>
-              <th scope="col">action</th>
+              <th  *ngIf="user?.role !== 'STUDENT'" scope="col">action</th>
             </tr>
             </thead>
             <tbody>
@@ -79,13 +87,12 @@
                 {{note?.studentNote}}
               </td>
 
-              <td>
+              <td  *ngIf="user?.role !== 'STUDENT'">
                 <button type="button"
                         (click)="openUpdate(note)"
                         class="btn btn-warning">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </button>
-
               </td>
 
             </tr>

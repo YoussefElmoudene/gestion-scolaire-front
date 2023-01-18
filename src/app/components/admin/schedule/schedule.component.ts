@@ -10,6 +10,9 @@ import {Groupe} from "../../../controller/modules/groupe.model";
 import {GroupeService} from "../../../controller/service/groupe.service";
 import {DatePipe} from "@angular/common";
 import {ExportAsConfig, ExportAsService} from "ngx-export-as";
+import {AuthService} from "../../../controller/service/auth.service";
+import {Teacher} from "../../../controller/modules/teacher.model";
+import {TeacherService} from "../../../controller/service/teacher.service";
 
 @Component({
   selector: 'app-schedule',
@@ -17,6 +20,7 @@ import {ExportAsConfig, ExportAsService} from "ngx-export-as";
   styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent implements OnInit, AfterViewInit {
+  user: any;
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
   calendarOptions: CalendarOptions = {
     plugins: [timeGridPlugin, dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -72,9 +76,13 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
       height: 900
     }
   };
+  teachers: Array<Teacher> = new Array<Teacher>();
+  teacher: Teacher = null;
 
   constructor(private scheduleService: ScheduleService,
               public datepipe: DatePipe,
+              private authService: AuthService,
+              private teacherService: TeacherService,
               private exportAsService: ExportAsService,
               private groupeService: GroupeService) {
   }
@@ -118,24 +126,41 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
 
 
   handleDateClick(arg) {
-    console.log(arg);
+    if (this.user?.role !== 'ADMIN') {
+      return;
+    }
     const start: Date = new Date(arg.date);
     let seance = new Seance();
     seance.startTime = start.getHours() + ':00:00';
     seance.endTime = (start.getHours() + 1) + ':00:00';
     seance.allDay = false;
     seance.daysOfWeek = '[' + start.getDay() + ']';
-    console.log(seance);
     this.selectedSeance = seance;
     this.showEdit = true;
   }
 
   ngOnInit() {
     this.groupeService.getAll().subscribe(d => this.groupes = d);
+    this.teacherService.getAll().subscribe(d => this.teachers = d);
   }
 
   ngAfterViewInit(): void {
-    this.getAll();
+    this.user = this.authService.getUserFromLocalCache();
+    if (this.user.role === 'STUDENT') {
+      this.scheduleService.getAll().subscribe(d => {
+        this.seances = d.filter(d => d.groupId === this.user?.groupeId);
+        // @ts-ignore
+        this.calendarOptions.events = this.seances;
+      })
+    } else if (this.user.role === 'TEACHER') {
+      this.scheduleService.getAll().subscribe(d => {
+        this.seances = d.filter(d => d.teacherId === this.user?.id);
+        // @ts-ignore
+        this.calendarOptions.events = this.seances;
+      })
+    } else {
+      this.getAll();
+    }
   }
 
 
@@ -160,5 +185,19 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
       // @ts-ignore
       this.calendarOptions.events = this.seances;
     })
+  }
+
+  filterByTeacher(teacher: Teacher) {
+    this.teacher = teacher
+    if (teacher === null) {
+      this.getAll();
+    } else {
+      this.scheduleService.getAll().subscribe(d => {
+        console.log(d);
+        this.seances = d.filter(g => g.teacherId === teacher?.id);
+        // @ts-ignore
+        this.calendarOptions.events = this.seances;
+      })
+    }
   }
 }

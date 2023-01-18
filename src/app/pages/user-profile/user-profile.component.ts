@@ -11,7 +11,7 @@ import {ToastrService} from "ngx-toastr";
 })
 export class UserProfileComponent implements OnInit {
 
-  user: User = new User();
+  user:any;
 
   constructor(private authService: AuthService,
               private toastr: ToastrService,

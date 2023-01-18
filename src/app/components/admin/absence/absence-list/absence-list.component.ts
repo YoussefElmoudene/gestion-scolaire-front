@@ -7,6 +7,8 @@ import {Module} from "../../../../controller/modules/module.model";
 import {AbsenceService} from "../../../../controller/service/absence.service";
 import {ModuleService} from "../../../../controller/service/module.service";
 import {Absence} from "../../../../controller/modules/absence.model";
+import {User} from "../../../../controller/modules/user.model";
+import {AuthService} from "../../../../controller/service/auth.service";
 
 @Component({
   selector: 'app-absence-list',
@@ -14,6 +16,7 @@ import {Absence} from "../../../../controller/modules/absence.model";
   styleUrls: ['./absence-list.component.css']
 })
 export class AbsenceListComponent implements OnInit {
+  user: any;
   students: Array<Student> = new Array<Student>();
   modules: Array<Module> = new Array<Module>();
   groupes: Array<Groupe> = new Array<Groupe>();
@@ -24,6 +27,7 @@ export class AbsenceListComponent implements OnInit {
   constructor(private groupeService: GroupeService,
               private absenceService: AbsenceService,
               private moduleService: ModuleService,
+              private authService: AuthService,
               private studentService: StudentService) {
   }
 
@@ -61,17 +65,22 @@ export class AbsenceListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user = this.authService.getUserFromLocalCache();
     this.groupeService.getAll().subscribe(g => this.groupes = g);
     this.studentService.getAll().subscribe(g => this.students = g);
     this.moduleService.getAll().subscribe(g => this.modules = g);
-    if (this.currentStudent?.id !== 0 && this.currentStudent !== null && this.currentStudent !== undefined) {
-      this.filterByStudent(this.currentStudent);
-      this.student = this.currentStudent
-    } else if (this.currentGroup?.id !== 0 && this.currentGroup !== null && this.currentGroup !== undefined) {
-      this.filterByGroup(this.currentGroup);
-      this.groupe = this.currentGroup
+    if (this.user.role === 'STUDENT') {
+      this.absenceService.getAll().subscribe(g => this.absences = g.filter(d => d.studentId === this.user.id));
     } else {
-      this.getAll();
+      if (this.currentStudent?.id !== 0 && this.currentStudent !== null && this.currentStudent !== undefined) {
+        this.filterByStudent(this.currentStudent);
+        this.student = this.currentStudent
+      } else if (this.currentGroup?.id !== 0 && this.currentGroup !== null && this.currentGroup !== undefined) {
+        this.filterByGroup(this.currentGroup);
+        this.groupe = this.currentGroup
+      } else {
+        this.getAll();
+      }
     }
   }
 

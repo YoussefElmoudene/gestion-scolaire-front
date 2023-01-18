@@ -9,28 +9,42 @@
 </div>
 <div class="container-fluid mt--7">
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-6">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a style="color: blue; cursor: pointer" (click)="getAll()">seances</a>
           </li>
           <li *ngIf="groupe" class="breadcrumb-item active"
               aria-current="page">{{groupe?.name}}</li>
+
+          <li *ngIf="user?.role === 'STUDENT'" class="breadcrumb-item active"
+              aria-current="page">{{user?.groupe?.name}}</li>
         </ol>
       </nav>
     </div>
 
-    <div class="col-md-2">
-      <button type="button" (click)="export()" class="btn float-right btn-light">export</button>
-    </div>
-    <div class="col-md-2">
+    <div *ngIf="this.user?.role !== 'STUDENT'" class="col-md-2">
       <div class="form-group">
         <select class="form-control form-control-alternative" (ngModelChange)="filterByGroup($event)"
                 [(ngModel)]="groupe">
-          <option selected [ngValue]="null">filter by group</option>
+          <option selected [ngValue]="null">filter by groups</option>
           <option *ngFor="let g of groupes" [ngValue]="g">{{g?.name}}</option>
         </select>
       </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <select class="form-control form-control-alternative" (ngModelChange)="filterByTeacher($event)"
+                [(ngModel)]="teacher">
+          <option selected [ngValue]="null">filter by teachers</option>
+          <option *ngFor="let g of teachers" [ngValue]="g">{{g?.name}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-1">
+      <button type="button" (click)="export()" class="btn float-right btn-light">export</button>
     </div>
 
 
